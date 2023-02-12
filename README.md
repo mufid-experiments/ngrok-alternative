@@ -12,7 +12,8 @@ Local tunneling done via SSH Reverse Tunneling.
   another DNS, you can edit `lib/capistrano/tasks/letsencrypt.rake`
 - The VPS/Server hosting itself does not matter. It does not
   necessarily hosted on DigitalOcean
-
+- Server setup using Capistrano. You can use rbenv/rvm.
+  In this document, we will be using rvm.
 
 ## Preparation
 
