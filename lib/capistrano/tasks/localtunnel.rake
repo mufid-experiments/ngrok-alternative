@@ -3,7 +3,9 @@ namespace :localtunnel do
     invoke 'infra:load_ip'
     invoke 'localtunnel:apt_update'
     invoke 'localtunnel:apt_nginx'
-    invoke 'localtunnel:letsencrypt'
+    invoke 'letsencrypt:install'
+    invoke 'nginx:setup'
+    invoke 'localtunnel:instruction'
   end
 
   task :apt_update do
@@ -18,23 +20,15 @@ namespace :localtunnel do
     end
   end
 
-  task :letsencrypt do
+  task :instruction do
     on roles(:app), in: :parallel do |host|
-      execute :sudo, :apt, :install, '-y', 'python3-certbot-dns-digitalocean'
-      execute :certbot, :plugins
-      execute :find, '/etc/letsencrypt'
-
-      letsencrypt_config = "dns_digitalocean_token = #{fetch(:digitalocean_api_token)}"
-
-      within("~") do
-        upload! StringIO.new(letsencrypt_config), "certbot-creds.ini"
-      end
-
-      execute :chmod, 600, '~/certbot-creds.ini'
-      execute :sudo, :certbot, :certonly,
-                     '--dns-digitalocean',
-                     '--dns-digitalocean-credentials', '~/certbot-creds.ini',
-                     '-d', fetch(:target_subdomain)
+      info 'Done!'
+      info 'Use following command to port forward'
+      info "your localhost:8080 to forward-5000.#{fetch(:target_domain)}"
+      info ''
+      info "     ssh -N -T -R 5000:localhost:8080 ltunnel@#{fetch(:target_domain)}"
+      info ''
+      info 'You can change 8080 to any of your local port. It can be 5000 as well.'
     end
   end
 end
