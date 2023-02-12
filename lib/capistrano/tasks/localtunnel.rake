@@ -26,7 +26,7 @@ namespace :localtunnel do
       info 'Use following command to port forward'
       info "your localhost:8080 to forward-5000.#{fetch(:target_domain)}"
       info ''
-      info "     ssh -N -T -R 5000:localhost:8080 ltunnel@#{fetch(:target_domain)}"
+      info "     ssh -N -T -R 5000:localhost:8080 #{fetch(:user)}@#{fetch(:target_domain)}"
       info ''
       info 'You can change 8080 to any of your local port. It can be 5000 as well.'
     end

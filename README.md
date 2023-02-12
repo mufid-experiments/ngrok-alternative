@@ -1,14 +1,26 @@
 # Local Tunnel Installer (Ngrok Alternative)
 
 Roll your own ngrok using your own VPS!
-Simple installer using Capistrano. This
-scripts assume you are using Debian-based server.
+Simple installer using Capistrano.
+Local tunneling done via SSH Reverse Tunneling.
+
+## Prerequisites
+
+- This script assumes you are using Debian-based server.
+  Tested using Ubuntu 22.04.
+- You MUST use DigitalOcean DNS. If you want to use
+  another DNS, you can edit `lib/capistrano/tasks/letsencrypt.rake`
+- The VPS/Server hosting itself does not matter. It does not
+  necessarily hosted on DigitalOcean
+
 
 ## Preparation
 
 Install all dependency on your local
 
-    rvm install
+    rvm install 3.1.2
+    git clone https://github.com/mufid-experiments/ngrok-alternative
+    cd ngrok-alternative
     bundle
 
 Copy example configuration file and edit it accordingly.
